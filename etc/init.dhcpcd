@@ -1,0 +1,12 @@
+#!/system/bin/sh
+
+IFACE="wwan0"
+
+# remove lease file
+/system/bin/rm /data/misc/dhcp/dhcpcd-$IFACE.lease
+
+# clear dhcp result
+/system/bin/setprop "dhcp.$IFACE.result" ""
+
+# start dhcpcd
+/system/bin/dhcpcd -B -d -o subnet_mask -o routers  -o domain_name_servers -o classless_static_routes $IFACE
