@@ -1,0 +1,58 @@
+# define service of sierra_dhcpcd
+service sierra_dhcpcd /system/bin/init.dhcpcd
+    class main
+    user root
+    group radio cache inet misc
+    disabled
+    oneshot
+
+service sierra_config_ip /system/bin/init.config.ip
+    class main
+    user root
+    group radio cache inet misc
+    disabled
+    oneshot
+
+service ril-daemon-qmi /system/bin/rild -l /system/lib/libsierra-ril.so -- -a -i wwan0
+    socket rild stream 660 root radio
+    socket rild-debug stream 660 radio system
+    socket swigps stream 660 system radio
+    user root
+    group radio cache inet misc audio log readproc wakelock
+    disabled
+
+service ril-daemon-at /system/bin/rild -l /system/lib/libsierraat-ril.so -- -a -i wwan0
+    socket rild stream 660 root radio
+    socket rild-debug stream 660 radio system
+    socket swigps stream 660 system radio
+    user root
+    group radio cache inet misc audio log readproc wakelock
+    disabled
+
+service ril-daemon-hl /system/bin/rild -l /system/lib/libsierrahl-ril.so -- -a -i wwan0
+    socket rild stream 660 root radio
+    socket rild-debug stream 660 radio system
+    socket swigps stream 660 system radio
+    user root
+    group radio cache inet misc audio log readproc wakelock
+    disabled
+
+service ril-daemon-ar /system/bin/rild -l /system/lib/libsierraat-ril.so -- -a -i wwan0
+    socket rild stream 660 root radio
+    socket rild-debug stream 660 radio system
+    socket swigps stream 660 system radio
+    user root
+    group radio cache inet misc audio log readproc wakelock
+    disabled
+
+on property:persist.sys.ril.type=QMI
+    start ril-daemon-qmi
+
+on property:persist.sys.ril.type=AT
+    start ril-daemon-at
+
+on property:persist.sys.ril.type=HL
+    start ril-daemon-hl
+
+on property:persist.sys.ril.type=AR
+    start ril-daemon-ar
