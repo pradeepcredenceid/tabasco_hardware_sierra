@@ -1,0 +1,14 @@
+###########################
+#   Intel Modem via USB   #
+###########################
+
+ACTION=="remove", GOTO="libusb_end"
+
+# Infineon USB Device
+SUBSYSTEM=="usb", ATTRS{idVendor}=="058b", ATTRS{idProduct}=="0015", MODE="0666"
+SUBSYSTEM=="usb", ATTRS{idVendor}=="058b", ATTRS{idProduct}=="0041", MODE="0666"
+
+# All products in the range [0x07EC - 0x080F]
+SUBSYSTEM=="usb", ATTRS{idVendor}=="8087", ATTRS{idProduct}=="0[78]??", MODE="0666"
+
+LABEL="libusb_end"

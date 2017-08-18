@@ -1,0 +1,121 @@
+/* 
+ * Filename: $Id: dr.txt,v 1.2 2008/10/15 00:22:08 epasheva Exp $
+ *
+ * Name:  DR Package User Information
+ * 
+ * Purpose: The Data Relay package provides coordination and support for all
+ *          implemented device services. It intercepts Requests, Data and 
+ *          Control Indication messages from Application and dispatches these
+ *          accordingly.
+ *          
+ * Entry Points:
+ *          The DR package provides the following global entry points:
+ *          drinit() - package initialization
+ *          drtaskinit() - DR Task initialization
+ *
+ * Testing:
+ *          To test this package build the SDK and run it.
+ *
+ *  Example: 
+ *           1. At pkgs/ directory type:
+ *              "make -f pkgs.mak"
+ *              This will build sdki386 in pkgs/sdk. 
+ *           2. Go to pkgs/sdk directory.
+ *           3. Run SDK by typing "./sdki386"
+ *           4. Open a new terminal and observe /var/log/user.log by typing:
+ *              "tailf /var/log/user.log"
+ *           5. Observe logs invoving DR and DRTASK (See "Sample Output" below)
+ *           E.g. One can disconnect and reconnect modem and observe a modem 
+ *              change  indication send to DRTASK         
+ *          
+ * Limitations:
+ *          As of September 30, 2008 DIAG device service uplink and downlink 
+ *          are supported. 
+ *          
+ *          
+ * NOTE:    DR package rpovides the receive interface from Application.
+ *          This interface either sends ebe=vents to DR task for processing
+ *          or deals with the received messages without involving the DR task.
+ *          
+ */          
+
+/* Good Test Output follows */
+------------------------------------------
+
+As of May 20, 2008 the output is logged in /var/log/user.log
+"tailf user.log" gives a monitoring capabilities for observing the logs.
+Sample output:
+Sep 30 13:34:33 Linuxdev3 SWI SDK Process: HPRX:No mdm, pausing for 1000 ms
+Sep 30 13:34:33 Linuxdev3 SWI SDK Process: IC:IPC Opened, index 0 
+Sep 30 13:34:33 Linuxdev3 SWI SDK Process: IC:IPC Opened, index 1 
+Sep 30 13:34:33 Linuxdev3 SWI SDK Process: AM:IPC Task started 
+Sep 30 13:34:33 Linuxdev3 SWI SDK Process: CN:RR Task started 
+Sep 30 13:34:33 Linuxdev3 SWI SDK Process: IC:IPC Opened, index 2 
+Sep 30 13:34:33 Linuxdev3 SWI SDK Process: DS_0: AP_DIAG IPC Task started 
+Sep 30 13:34:33 Linuxdev3 SWI SDK Process: SDK:SDK Process Started 
+Sep 30 13:34:33 Linuxdev3 SWI SDK Process: IC:IPC Opened, index 3 
+Sep 30 13:34:33 Linuxdev3 SWI SDK Process: DS_1: AP_NMEA IPC Task started 
+Sep 30 13:34:33 Linuxdev3 SWI SDK Process: DR:Registering callback for msgid 109 
+Sep 30 13:34:33 Linuxdev3 SWI SDK Process: DR:Modem state change callback - modemOn[1] 
+Sep 30 13:34:33 Linuxdev3 SWI SDK Process: DR:Data Relay Task started 
+Sep 30 13:34:33 Linuxdev3 SWI SDK Process: DR:Modem state change callback - modemOn[1] 
+Sep 30 13:34:33 Linuxdev3 SWI SDK Process: ICTT:IC Tick Task loop # 0
+Sep 30 13:34:33 Linuxdev3 SWI SDK Process: USDT:usdet: Modem detected. VID 1199, PID 6812 
+Sep 30 13:34:33 Linuxdev3 SWI SDK Process: HPPH:Sent loopback request to modem
+Sep 30 13:34:35 Linuxdev3 SWI SDK Process: USDT:LB test ret'd error 1, retrying on ep 2
+...
+Sep 30 13:34:40 Linuxdev3 SWI SDK Process: HPPH:Sent loopback request to modem
+Sep 30 13:34:40 Linuxdev3 SWI SDK Process: USDT:Loopback complete. Mode: 1, Read EP: 4, Write EP: 4
+Sep 30 13:34:40 Linuxdev3 SWI SDK Process: HPPH:FWDWN: Modem state change callback - modemOn[1] 
+Sep 30 13:34:40 Linuxdev3 SWI SDK Process: HPPH:Called FWDWN: Device: 302 online, executing 1
+Sep 30 13:34:40 Linuxdev3 SWI SDK Process: DR:Modem state change callback - modemOn[1] 
+Sep 30 13:34:40 Linuxdev3 SWI SDK Process: HPPH:Called DRTASK: Device: 302 online, executing 1
+Sep 30 13:34:42 Linuxdev3 SWI SDK Process: HPPH:[100] Tick
+Sep 30 13:34:43 Linuxdev3 SWI SDK Process: ICTT:IC Tick Task loop # 100
+...DISCONNECTING MODEM...
+Sep 30 13:37:42 Linuxdev3 SWI SDK Process: HPPH:[1900] Tick
+Sep 30 13:37:43 Linuxdev3 SWI SDK Process: ICTT:IC Tick Task loop # 1900
+Sep 30 13:37:52 Linuxdev3 SWI SDK Process: HPPH:[2000] Tick
+Sep 30 13:37:52 Linuxdev3 SWI SDK Process: USB read unexpected EOF error
+Sep 30 13:37:52 Linuxdev3 SWI SDK Process: HPRX:No mdm, pausing for 1000 ms
+Sep 30 13:37:53 Linuxdev3 SWI SDK Process: USDT:usdet: Modem disconnected, invalidating EPs 
+Sep 30 13:37:53 Linuxdev3 SWI SDK Process: HPPH:FWDWN: Modem state change callback - modemOn[0] 
+Sep 30 13:37:53 Linuxdev3 SWI SDK Process: HPPH:Called FWDWN: modem unavailable
+Sep 30 13:37:53 Linuxdev3 SWI SDK Process: DR:Modem state change callback - modemOn[0] 
+Sep 30 13:37:53 Linuxdev3 SWI SDK Process: HPPH:Called DRTASK: modem unavailable
+Sep 30 13:37:53 Linuxdev3 SWI SDK Process: HPTX:Mdm failure detected 
+Sep 30 13:37:53 Linuxdev3 SWI SDK Process: ICTT:IC Tick Task loop # 2000
+Sep 30 13:37:53 Linuxdev3 SWI SDK Process: HPRX:No mdm, pausing for 1000 ms
+...RECONNECTING MODEM...
+Sep 30 14:15:11 Linuxdev3 SWI SDK Process: USDT:usdet: Modem detected. VID 1199, PID 6812 
+Sep 30 14:15:11 Linuxdev3 SWI SDK Process: HPPH:Sent loopback request to modem
+Sep 30 14:15:12 Linuxdev3 SWI SDK Process: HPPH:[24400] Tick
+Sep 30 14:15:13 Linuxdev3 SWI SDK Process: USDT:LB test ret'd error 1, retrying on ep 2
+Sep 30 14:15:13 Linuxdev3 SWI SDK Process: USDT:LB test ret'd error 1, retrying on ep 2
+Sep 30 14:15:13 Linuxdev3 SWI SDK Process: HPPH:Sent loopback request to modem
+Sep 30 14:15:14 Linuxdev3 SWI SDK Process: ICTT:IC Tick Task loop # 24400
+Sep 30 14:15:15 Linuxdev3 SWI SDK Process: USDT:LB test ret'd error 1, retrying on ep 4
+Sep 30 14:15:15 Linuxdev3 SWI SDK Process: 
+Sep 30 14:15:15 Linuxdev3 SWI SDK Process: HPPH:Sent loopback request to modem
+Sep 30 14:15:17 Linuxdev3 SWI SDK Process: USDT:LB test ret'd error 1, retrying on ep 2
+Sep 30 14:15:17 Linuxdev3 SWI SDK Process: USDT:LB test ret'd error 1, retrying on ep 2
+Sep 30 14:15:17 Linuxdev3 SWI SDK Process: HPPH:Sent loopback request to modem
+Sep 30 14:15:18 Linuxdev3 SWI SDK Process: USDT:Loopback complete. Mode: 1, Read EP: 4, Write EP: 4
+Sep 30 14:15:18 Linuxdev3 SWI SDK Process: HPPH:FWDWN: Modem state change callback - modemOn[1] 
+Sep 30 14:15:18 Linuxdev3 SWI SDK Process: HPPH:Called FWDWN: Device: 302 online, executing 1
+Sep 30 14:15:18 Linuxdev3 SWI SDK Process: DR:Modem state change callback - modemOn[1] 
+Sep 30 14:15:18 Linuxdev3 SWI SDK Process: HPPH:Called DRTASK: Device: 302 online, executing 1
+Sep 30 14:15:21 Linuxdev3 SWI SDK Process: HPPH:[24500] Tick
+Sep 30 14:15:24 Linuxdev3 SWI SDK Process: ICTT:IC Tick Task loop # 24500
+
+
+/*
+ * $Log: dr.txt,v $
+ * Revision 1.2  2008/10/15 00:22:08  epasheva
+ * Renamed DM to DIAG.
+ *
+ * Revision 1.1  2008/09/30 23:27:26  epasheva
+ * Initial checkin.
+ *
+ *
+ */

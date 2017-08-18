@@ -1,0 +1,43 @@
+/* 
+ * Filename: $Id: ap.txt,v 1.1 2008/05/26 21:41:41 rfiler Exp $
+ *
+ * Name:  AP Package User Information
+ * 
+ * Purpose: The AP package contains all the code that implements the APIs
+            and underlying management software for the Linux V2 SDK. The
+ *          package is split up into several different types of code in
+ *          one flat directory structure. 
+ *          
+ *          This description is a work in progress and will be updated as
+ *          the AP package becomes better defined.
+ *          
+ * Entry Points:
+ *          Refer to external customer documentation for the APIs supported
+ *          by this package.
+ *
+ * Testing: Testing is done by running the executable appropriate for the 
+ *          hardware being tested. For instance, on a 32-bit i386, run
+ *          aptesti386. 
+ * 
+ *          More information required here when the test engine is more
+ *          clearly defined
+ *          
+ * Limitations:
+ *          None
+ *          
+ *          
+ * NOTE:    
+ *          
+ */          
+
+
+/*
+ * $Log: ap.txt,v $
+ * Revision 1.1  2008/05/26 21:41:41  rfiler
+ * Initial checkin of this new package. The AP package implements all of the
+ * top-edge functions exposed to customers for the Linux V2 SDK. It also
+ * contains test facilities and some internal functions for managing the
+ * API-side during runtime
+ *
+ *
+ */

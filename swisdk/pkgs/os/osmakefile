@@ -1,0 +1,50 @@
+# Build the OS Wrapper test programs
+#
+# To debug this file, consider using the command:
+#    make -p -debug=bij
+#
+
+CC := /usr/bin/gcc
+
+CFLAGS := -g
+
+# API (application) side .c/.o files
+apiside := swi_osapisidetest swi_osapi
+
+# SDK (daemon) side .c/.o files
+sdkside := swi_ossdksidetest swi_ossdk
+
+# first rule = default rule when 'make' typed = build executables
+.PHONY: debug
+
+debug : sdktest sdkprocess
+
+# build .o files from implicit rules using CC/CFLAGS
+$(addsuffix .o, $(apiside)) : swi_osapi.h ../aa/aaglobal.h osmakefile
+
+# build .o files from implicit rules using CC/CFLAGS
+$(addsuffix .o, $(sdkside)) : swi_ossdk.h ../aa/aaglobal.h osmakefile
+
+
+# build sdktest (the API/application side) from .o files
+sdktest : $(addsuffix .o, $(apiside))
+	$(CC)   -g -o $@ $^
+
+# Build sdkprocess (the SDK daemon side) from .o files
+# Note -lrt is required to pull in real-time functions such as clock_gettime
+sdkprocess : $(addsuffix .o, $(sdkside))
+	$(CC)    -g -lrt -o $@ $^
+
+.PHONY: clean
+
+clean:
+	rm *.o sdktest sdkprocess
+
+#
+# $Log: osmakefile,v $
+# Revision 1.1  2008/05/13 03:57:00  rfiler
+# Renamed this file from os.mak. This file contains the original instructions
+# from the author. It should be used to build the OS package test programs
+# until this functionality has been built into the new os.mak makefile.
+#
+#

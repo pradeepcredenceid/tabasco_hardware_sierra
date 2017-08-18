@@ -1,0 +1,31 @@
+/* 
+ * Filename: $
+ *
+ * Name:  DD Package User Information
+ * 
+ * Purpose: The DD package provides Device Detection services to the rest 
+ *          of the SDK as well as miscellaneous functions which provide 
+ *          device related information to other packages within the SDK.
+ *          
+ * Entry Points:
+ *          ddwitech()   - Provides other packages with a way of finding
+ *                         out what wireless technology is connected to
+ *                         the host.
+ *
+ * Testing: This package is too small to require a test function
+ *          
+ * Limitations:
+ *          None
+ *          
+ * Note:    None
+ *          
+ */          
+
+
+/*
+ * $Log: dd.txt,v $
+ * Revision 1.1  2008/06/13 22:10:38  rfiler
+ * New package implementing device detection services for the SDK
+ *
+ *
+ */

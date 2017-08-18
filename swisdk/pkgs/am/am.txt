@@ -1,0 +1,46 @@
+/* 
+ * Filename: $Id: am.txt,v 1.2 2008/05/02 18:52:59 rfiler Exp $
+ *
+ * Name:  AM Package User Information
+ * 
+ * Purpose: The AM package contains code for the application messaging
+ *          interface which sends and receives packets between the 
+ *          Linux V2 SDK and an application. Packet definitions 
+ *          contained in IDD_ApplicationMessaging.doc (and its sub-
+ *          ordinate documents) are implemented within this package
+ *
+ *          Source files are split into multiple types, those processed
+ *          within the SDK process and those processed by applications.
+ *          The filename_sdk.c files are for use within the SDK process.
+ *          
+ * Entry Points:
+ *          The AM package provides the following global entry points:
+ *             hpTxPacket()   - See hptx.c for details
+ *          
+ * Testing: The test program contains a dummy AMCNSREQUEST packet header
+ *          and simply passes this structure into the AM entry points
+ *          for parsing the entries and advancing the packet pointer. 
+ *          
+ *          The test verification consists of observing the information
+ *          information printed on the screen and comparing it with what
+ *          is stored in the dummy packet. 
+ *          
+ * Limitations:
+ *          None
+ *          
+ * NOTE:    
+ *          
+ */          
+
+
+/*
+ * $Log: am.txt,v $
+ * Revision 1.2  2008/05/02 18:52:59  rfiler
+ * Updated with a description for the testing section
+ *
+ * Revision 1.1  2008/04/15 00:18:45  rfiler
+ * New package (empty) for implementing the Application Messaging protocol
+ * for the Linux V2 SDK
+ *
+ *
+ */

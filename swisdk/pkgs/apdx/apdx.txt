@@ -1,0 +1,84 @@
+/* 
+ * Filename: $
+ *
+ * Name:  APDX Package User Information
+ * 
+ * Purpose: The APDX package contains all the code that implements the APIs
+ *          and underlying management software for the Demux Messaging for
+ *          Linux V2 SDK. The package is split up into several different types 
+ *          of code in one flat directory structure. 
+ *          
+ *          This description is a work in progress and will be updated as
+ *          the APDX package becomes better defined.
+ *          
+ * Entry Points:
+ *          Refer to external customer documentation for the APIs supported
+ *          by this package.
+ *
+ * Testing: Testing is done by running the executable appropriate for the 
+ *          hardware being tested. For instance, on a 32-bit i386, run
+ *          apdxtesti386. 
+ * 
+ *          More information required here when the test engine is more
+ *          clearly defined
+ *          
+ * Limitations:
+ *          None
+ *          
+ * NOTE:  This APDX package implements currently the Demux Messaging protocol 
+ *        defined in IDD_DemuxMessaging Document.  
+ *          
+ */ 
+          
+/* Good Test Output follows */
+------------------------------------------
+
+Demux API Startup Successful
+
+APDX: DIAG registered the following callbacks:
+APDX: Data Callback: 0x80481f0, Data User Parameter: 0x8048120
+APDX: Ctl  Callback: 0x804832c, Ctl  User Parameter: 0xbfba1ef8
+
+DIAG Service started
+
+
+Pause for a while 
+
+Demux Data callback 0x8048120
+Data byte 0: 0
+Data byte 1: 3
+Data byte 2: 0
+Data byte 3: 0
+Data byte 4: 9
+Data byte 5: 0
+Data byte 6: 0
+Data byte 7: 1d
+Data byte 8: dc
+Data byte 9: 6
+Data byte 10: 87
+Data byte 11: a4
+Data byte 12: 11
+Data byte 13: 0
+Data byte 14: 0
+Data byte 15: 0
+Data byte 16: d8
+Data byte 17: d4
+Data byte 18: 7e
+Data byte 19: 0
+Data byte 20: 0
+
+Demux Ctl Ind callback 0xbfba1ef8
+
+
+Diagnostic Service stopped
+
+
+------------------------------------------
+
+/*
+ * $Log: apdx.txt,v $
+ * Revision 1.1  2008/10/15 00:10:59  epasheva
+ * Initial checkin.
+ *
+ *
+ */

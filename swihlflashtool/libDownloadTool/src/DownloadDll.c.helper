@@ -1,0 +1,95 @@
+ /*   ----------------------------------------------------------------------
+     Copyright (C) 2011 Intel Mobile Communications GmbH
+     Copyright (C) 2009 - 2010 Infineon Technologies Denmark A/S (IFWD)
+     ----------------------------------------------------------------------
+     Revision Information:
+       $ File name:  /dwdtoolsrc/bootcore/inc/ebl2_files.h $
+       $ CC-Version: .../rel_bootcore/11 $
+       $ Date:       2011-12-04    8:25:48 UTC $
+     ----------------------------------------------------------------------
+     by CCCT (v0.4)
+     ---------------------------------------------------------------------- */
+
+ /*  -------------------------------------------------------------------------
+    Description:
+      Interface for dynamically loading the Download Library
+      INFO: This is a dummy file, for showing how to load the library in source code.
+            You can copy this code into any source code and then load the Download Library
+            just by running this func*tion:
+ 
+      DownloadLibraryStruct* dl = LoadDownloadLibrary("libIFWDdownload.dll");
+
+      Alternately you can use the LibraryLoader c++ class
+      Contact the author for more information
+     ------------------------------------------------------------------------- */
+	 
+#include "DownloadTool.h"
+
+#ifdef __cplusplus
+extern "C"
+#endif
+DownloadLibraryStruct* LoadDownloadLibrary(const char* library)
+{
+  #ifdef _WIN32
+    char buffer[256];
+    buffer[0] = '_';
+    strcat(buffer, library);
+    library = buffer;
+  #endif
+
+   /*LoadLibrary*/
+   HINSTANCE hdll = LoadLibrary (library );
+   if (!hdll) { fprintf(stderr, "Error loading download library\n"); return NULL; }
+
+   DownloadLibraryStruct* DownloadLibrary = (DownloadLibraryStruct*)malloc(sizeof(DownloadLibraryStruct));
+
+   /*GetProcAddress*/
+   //DownloadLibrary->DllEntryPoint            = (DllEntryPointfunc*)GetProcAddress(hdll, "DllEntryPoint");
+   //DownloadLibrary->Test_Setup               = (Test_Setupfunc*)GetProcAddress(hdll, "Test_Setup");
+   //DownloadLibrary->switch_port              = (switch_portfunc*)GetProcAddress(hdll, "switch_port");
+   DownloadLibrary->get_version                = (IFWD_DL_get_versionfunc*)GetProcAddress(hdll, "IFWD_DL_get_dll_version");
+   DownloadLibrary->get_sw_version_data        = (IFWD_DL_get_sw_version_datafunc*)GetProcAddress(hdll, "IFWD_DL_get_sw_version_data");
+   DownloadLibrary->set_parameter              = (IFWD_DL_set_parameterfunc*)GetProcAddress(hdll, "IFWD_DL_set_dll_parameter");
+   DownloadLibrary->get_parameter              = (IFWD_DL_get_parameterfunc*)GetProcAddress(hdll, "IFWD_DL_dll_get_parameter");
+   DownloadLibrary->init_callback              = (IFWD_DL_init_callbackfunc*)GetProcAddress(hdll, "IFWD_DL_init_callback");
+   DownloadLibrary->open_comm_port             = (IFWD_DL_open_comm_portfunc*)GetProcAddress(hdll, "IFWD_DL_open_comm_port");
+   DownloadLibrary->close_comm_port            = (IFWD_DL_close_comm_portfunc*)GetProcAddress(hdll, "IFWD_DL_close_comm_port");
+   DownloadLibrary->boot_target                = (IFWD_DL_boot_targetfunc*)GetProcAddress(hdll, "IFWD_DL_boot_target");
+   DownloadLibrary->boot_bin_target            = (IFWD_DL_boot_bin_targetfunc*)GetProcAddress(hdll, "IFWD_DL_boot_bin_target");
+   DownloadLibrary->set_get_control_signal     = (IFWD_DL_set_get_control_signalfunc*)GetProcAddress(hdll, "IFWD_DL_set_get_control_signal");
+   DownloadLibrary->download_fls_file          = (IFWD_DL_download_fls_filefunc*)GetProcAddress(hdll, "IFWD_DL_download_fls_file");
+   DownloadLibrary->download_eep_file          = (IFWD_DL_download_eep_filefunc*)GetProcAddress(hdll, "IFWD_DL_download_eep_file");
+   DownloadLibrary->download_dffs_file         = (IFWD_DL_download_dffs_filefunc*)GetProcAddress(hdll, "IFWD_DL_download_dffs_file");
+   DownloadLibrary->download_cust_file         = (IFWD_DL_download_cust_filefunc*)GetProcAddress(hdll, "IFWD_DL_download_cust_file");
+   DownloadLibrary->upload_eep_file            = (IFWD_DL_upload_eep_filefunc*)GetProcAddress(hdll, "IFWD_DL_upload_eep_file");
+   DownloadLibrary->update_static_eeprom       = (IFWD_DL_update_static_eepromfunc*)GetProcAddress(hdll, "IFWD_DL_update_static_eeprom");
+   DownloadLibrary->upload_bin_image           = (IFWD_DL_upload_bin_imagefunc*)GetProcAddress(hdll, "IFWD_DL_upload_bin_image");
+   DownloadLibrary->download_bin_image         = (IFWD_DL_download_bin_imagefunc*)GetProcAddress(hdll, "IFWD_DL_download_bin_image");
+   DownloadLibrary->erase_image                = (IFWD_DL_erase_imagefunc*)GetProcAddress(hdll, "IFWD_DL_erase_image");
+   DownloadLibrary->verify_flash_image         = (IFWD_DL_verify_flash_imagefunc*)GetProcAddress(hdll, "IFWD_DL_verify_flash_image");
+   DownloadLibrary->abort_process              = (IFWD_DL_abort_processfunc*)GetProcAddress(hdll, "IFWD_DL_abort_process");
+   DownloadLibrary->force_target_reset         = (IFWD_DL_force_target_resetfunc*)GetProcAddress(hdll, "IFWD_DL_force_target_reset");
+   DownloadLibrary->end_of_process             = (IFWD_DL_end_of_processfunc*)GetProcAddress(hdll, "IFWD_DL_end_of_process");
+   DownloadLibrary->start_AT_mode              = (IFWD_DL_start_AT_modefunc*)GetProcAddress(hdll, "IFWD_DL_start_AT_mode");
+   DownloadLibrary->stop_AT_mode               = (IFWD_DL_stop_AT_modefunc*)GetProcAddress(hdll, "IFWD_DL_stop_AT_mode");
+   DownloadLibrary->AT_send                    = (IFWD_DL_AT_sendfunc*)GetProcAddress(hdll, "IFWD_DL_AT_send");
+   DownloadLibrary->set_external_file_handling = (IFWD_DL_set_external_file_handlingfunc*)GetProcAddress(hdll, "IFWD_DL_set_external_file_handling");
+   DownloadLibrary->TOC_get_nof_items          = (IFWD_DL_TOC_get_nof_itemsfunc*)GetProcAddress(hdll, "IFWD_DL_TOC_get_nof_items");
+   DownloadLibrary->TOC_get_memory_class       = (IFWD_DL_TOC_get_memory_classfunc*)GetProcAddress(hdll, "IFWD_DL_TOC_get_memory_class");
+   DownloadLibrary->TOC_get_sw_option          = (IFWD_DL_TOC_get_sw_optionfunc*)GetProcAddress(hdll, "IFWD_DL_TOC_get_sw_option");
+   DownloadLibrary->get_sys_version            = (IFWD_DL_get_sys_versionfunc*)GetProcAddress(hdll, "IFWD_DL_get_sys_version");
+   DownloadLibrary->TOC_get_filename           = (IFWD_DL_TOC_get_filenamefunc*)GetProcAddress(hdll, "IFWD_DL_TOC_get_filename");
+   DownloadLibrary->TOC_get_checksum           = (IFWD_DL_TOC_get_checksumfunc*)GetProcAddress(hdll, "IFWD_DL_TOC_get_checksum");
+   DownloadLibrary->TOC_get_filesize           = (IFWD_DL_TOC_get_filesizefunc*)GetProcAddress(hdll, "IFWD_DL_TOC_get_filesize");
+   DownloadLibrary->get_nof_progressbars       = (IFWD_DL_get_nof_progressbarsfunc*)GetProcAddress(hdll, "IFWD_DL_dll_get_nof_progressbars");
+   DownloadLibrary->NVM_get_nof_user_options   = (IFWD_DL_NVM_get_nof_user_optionsfunc*)GetProcAddress(hdll, "IFWD_DL_NVM_get_nof_user_options");
+   DownloadLibrary->NVM_get_user_option        = (IFWD_DL_NVM_get_user_optionfunc*)GetProcAddress(hdll, "IFWD_DL_NVM_get_user_option");
+   DownloadLibrary->NVM_set_user_option        = (IFWD_DL_NVM_set_user_optionfunc*)GetProcAddress(hdll, "IFWD_DL_NVM_set_user_option");
+   DownloadLibrary->trace_insert               = (IFWD_DL_trace_insertfunc*)GetProcAddress(hdll, "IFWD_DL_trace_insert");
+   DownloadLibrary->out_of_session_comm        = (IFWD_DL_out_of_session_commfunc*)GetProcAddress(hdll, "IFWD_DL_out_of_session_comm");
+   DownloadLibrary->get_comm_handle            = (IFWD_DL_get_comm_handlerfunc*)GetProcAddress(hdll, "IFWD_get_comm_handle");
+
+   // TODO: Check that all functions where loaded...
+
+   return DownloadLibrary;
+}

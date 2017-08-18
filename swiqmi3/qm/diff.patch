@@ -1,0 +1,39 @@
+Index: qmidefs.h
+===================================================================
+--- qmidefs.h	(revision 1929)
++++ qmidefs.h	(working copy)
+@@ -216,7 +216,7 @@
+     struct mmpool       qmtxpool;
+     struct mmpool       qmtxsmlpool;
+ 
+-    struct dsipcshell   qmdsshell[QM_MAX_QMI_INST_SUPPORTED];
++    struct dsipcshell   qmdsshell[QM_MAX_QMI_INST_SUPPORTED][QMI_SUPPORTED_CLNT_MAX];
+     swi_uint8           qmidevicestate;
+     struct qm_app_info  qmappInfo[QM_MAX_APP_SUPPORTED];
+     struct qm_fms_info  fms_data;
+Index: qmtask_sdk.c
+===================================================================
+--- qmtask_sdk.c	(revision 1929)
++++ qmtask_sdk.c	(working copy)
+@@ -1077,15 +1077,15 @@
+                 (swi_uint32)qmiclientmgr.qmiclients[client].qmisvcname );
+ 
+         /* initialize QMI DS shell parameters */
+-        qmcbp->qmdsshell[qmiinstance].dsipcshellnamep = (swi_uint8 *)pqmstr;
+-        qmcbp->qmdsshell[qmiinstance].dsipccbfcnp = qmrxpkt;
+-        qmcbp->qmdsshell[qmiinstance].client = client;
+-        qmcbp->qmdsshell[qmiinstance].udata = (void *)qmiinstance;
++        qmcbp->qmdsshell[qmiinstance][client].dsipcshellnamep = (swi_uint8 *)pqmstr;
++        qmcbp->qmdsshell[qmiinstance][client].dsipccbfcnp = qmrxpkt;
++        qmcbp->qmdsshell[qmiinstance][client].client = client;
++        qmcbp->qmdsshell[qmiinstance][client].udata = (void *)qmiinstance;
+ 
+         /* Activate QMI DS shell for reading QMI response */
+-        qmcbp->qmdsshell[qmiinstance].dssinitcbfp = NULL;
++        qmcbp->qmdsshell[qmiinstance][client].dssinitcbfp = NULL;
+         swi_ossdkthreadcreate(  dslaunchshell,
+-                                &qmtaskblk.qmdsshell[qmiinstance]);
++                                &qmtaskblk.qmdsshell[qmiinstance][client]);
+     }
+     else
+     {

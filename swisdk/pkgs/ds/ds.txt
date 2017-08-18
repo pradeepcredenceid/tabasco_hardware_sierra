@@ -1,0 +1,109 @@
+/* 
+ * Filename: $Id: ds.txt,v 1.2 2008/10/15 00:19:43 epasheva Exp $
+ *
+ * Name:  DS Package User Information
+ * 
+ * Purpose: The DS package implements the Device Service functionality.
+ *          It provides a standard interface for applications to 
+ *          external I/O points such as IPC channels and USB endpoints.
+ * 
+ *          
+ * Entry Points:
+ *          The DS package provides the following global entry points:
+ *          dsgetipchandle() - to obtain IPC channel id for specific
+ *                                       channel type
+ *          dsinit()  - package initialization
+ *          dsshell() - DS shell instances that can be called with different 
+ *                      input parameters from other packages.
+ *          dssend() - DS dssend() interface for sending data from device 
+ *                     to application
+ *          dsclose() - to close a speciffic channel
+ *          
+ *          Using this package for an I/O point spawns a separate thread 
+ *          which blocks waiting to receive traffic on that I/O
+ *          
+ * Testing:
+ *          To test this package, compile and link the images including
+ *          dstest.c from the command line. Build the SDK and run it.
+ *
+ *  Example: 
+ *           1. At pkgs/ directory type:
+ *              "make -f pkgs.mak"
+ *              This will build sdki386 in pkgs/sdk. 
+ *           2. Go to pkgs/sdk directory.
+ *           3. Run SDK by typing "./sdki386"
+ *           4. Open a new terminal and observe /var/log/user.log by typing:
+ *              "tailf /var/log/user.log"
+ *           5. Observe logs invoving DS, e.g. observe creation 
+ *              a DS_0 and DS_1 threads on startup. (See "Sample Output" below)
+ *          
+ *          
+ * Limitations:
+ *          As of Sept. 30 2008 Endpoints handling not implemented.  
+ *          We use the exisitng HP interface to send multiplexed messages 
+ *          over HIP endpoint.
+ *          
+ *          
+ *          
+ * NOTE:    As of Sept. 30 2008  DIAG device service is implemented. 
+ *          Please refer to IDD_DemuxMessaging document for protocol messages
+ *          description.
+ *          
+ */          
+
+/* Good Test Output follows */
+------------------------------------------
+
+The output is logged in /var/log/user.log
+"tailf user.log" gives a monitoring capabilities for observing the logs.
+Sample output:
+
+Sep 30 13:34:33 Linuxdev3 SWI SDK Process: HPRX:No mdm, pausing for 1000 ms
+Sep 30 13:34:33 Linuxdev3 SWI SDK Process: IC:IPC Opened, index 0 
+Sep 30 13:34:33 Linuxdev3 SWI SDK Process: IC:IPC Opened, index 1 
+Sep 30 13:34:33 Linuxdev3 SWI SDK Process: AM:IPC Task started 
+Sep 30 13:34:33 Linuxdev3 SWI SDK Process: CN:RR Task started 
+Sep 30 13:34:33 Linuxdev3 SWI SDK Process: IC:IPC Opened, index 2 
+Sep 30 13:34:33 Linuxdev3 SWI SDK Process: DS_0: AP_DIAG IPC Task started 
+Sep 30 13:34:33 Linuxdev3 SWI SDK Process: SDK:SDK Process Started 
+Sep 30 13:34:33 Linuxdev3 SWI SDK Process: IC:IPC Opened, index 3 
+Sep 30 13:34:33 Linuxdev3 SWI SDK Process: DS_1: AP_NMEA IPC Task started 
+Sep 30 13:34:33 Linuxdev3 SWI SDK Process: DR:Registering callback for msgid 109 
+Sep 30 13:34:33 Linuxdev3 SWI SDK Process: DR:Modem state change callback - modemOn[1] 
+Sep 30 13:34:33 Linuxdev3 SWI SDK Process: DR:Data Relay Task started 
+Sep 30 13:34:33 Linuxdev3 SWI SDK Process: DR:Modem state change callback - modemOn[1] 
+Sep 30 13:34:33 Linuxdev3 SWI SDK Process: ICTT:IC Tick Task loop # 0
+Sep 30 13:34:33 Linuxdev3 SWI SDK Process: USDT:usdet: Modem detected. VID 1199, PID 6812 
+Sep 30 13:34:33 Linuxdev3 SWI SDK Process: HPPH:Sent loopback request to modem
+Sep 30 13:34:35 Linuxdev3 SWI SDK Process: USDT:LB test ret'd error 1, retrying on ep 2
+Sep 30 13:34:35 Linuxdev3 SWI SDK Process: 
+Sep 30 13:34:35 Linuxdev3 SWI SDK Process: HPPH:Sent loopback request to modem
+Sep 30 13:34:38 Linuxdev3 SWI SDK Process: HPPH:LB timed out awaiting loopback
+Sep 30 13:34:38 Linuxdev3 SWI SDK Process: USDT:LB test ret'd error 1, retrying on ep 4
+Sep 30 13:34:38 Linuxdev3 SWI SDK Process: HPPH:Sent loopback request to modem
+Sep 30 13:34:40 Linuxdev3 SWI SDK Process: USDT:LB test ret'd error 1, retrying on ep 2
+Sep 30 13:34:40 Linuxdev3 SWI SDK Process: USDT:LB test ret'd error 1, retrying on ep 2
+Sep 30 13:34:40 Linuxdev3 SWI SDK Process: HPPH:Sent loopback request to modem
+Sep 30 13:34:40 Linuxdev3 SWI SDK Process: USDT:Loopback complete. Mode: 1, Read EP: 4, Write EP: 4
+Sep 30 13:34:40 Linuxdev3 SWI SDK Process: HPPH:FWDWN: Modem state change callback - modemOn[1] 
+Sep 30 13:34:40 Linuxdev3 SWI SDK Process: HPPH:Called FWDWN: Device: 302 online, executing 1
+Sep 30 13:34:40 Linuxdev3 SWI SDK Process: DR:Modem state change callback - modemOn[1] 
+Sep 30 13:34:40 Linuxdev3 SWI SDK Process: HPPH:Called DRTASK: Device: 302 online, executing 1
+Sep 30 13:34:42 Linuxdev3 SWI SDK Process: HPPH:[100] Tick
+Sep 30 13:34:43 Linuxdev3 SWI SDK Process: ICTT:IC Tick Task loop # 100
+
+
+
+
+
+
+/*
+ * $Log: ds.txt,v $
+ * Revision 1.2  2008/10/15 00:19:43  epasheva
+ * Renamed DM to DIAG.
+ *
+ * Revision 1.1  2008/09/30 23:32:54  epasheva
+ * Initial checkin.
+ *
+ *
+ */
