@@ -1,0 +1,7 @@
+#============= shell ==============
+allow shell device:chr_file { getattr ioctl };
+allow shell device:dir { read open };
+allow shell init_exec:file getattr;
+allow shell ril_device:chr_file getattr;
+allow shell rootfs:file getattr;
+allow shell serial_device:chr_file getattr;

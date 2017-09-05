@@ -1,0 +1,27 @@
+type sierra_config_ip, domain;
+type sierra_config_ip_exec, exec_type, file_type;
+
+init_daemon_domain(sierra_config_ip)
+net_domain(sierra_config_ip)
+
+allow sierra_config_ip self:packet_socket create_socket_perms;
+allow sierra_config_ip self:capability { setuid net_admin dac_override setgid net_raw net_bind_service};
+allow sierra_config_ip self:netlink_route_socket nlmsg_write;
+
+allow sierra_config_ip dhcp_data_file:file create_file_perms;
+allow sierra_config_ip dhcp_data_file:dir w_dir_perms;
+allow sierra_config_ip proc_net:file rw_file_perms;
+allow sierra_config_ip system_file:file rx_file_perms;
+allow sierra_config_ip system_file:dir r_dir_perms;
+allow sierra_config_ip sysfs:dir r_dir_perms;
+
+allow sierra_config_ip toolbox_exec:file { read getattr open execute execute_no_trans };
+allow sierra_config_ip init:unix_stream_socket connectto;
+allow sierra_config_ip property_socket:sock_file write;
+
+allow sierra_config_ip shell_exec:file {entrypoint rx_file_perms};
+allow sierra_config_ip dhcp_exec:file {entrypoint rx_file_perms};
+allow sierra_config_ip dhcp_prop:property_service set;
+allow sierra_config_ip radio_prop:property_service set;
+allow sierra_config_ip rootfs:lnk_file getattr;
+allow sierra_config_ip kernel:system module_request;

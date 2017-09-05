@@ -1,0 +1,8 @@
+/dev/ttyUSB[0-4]*      u:object_r:ril_device:s0
+/dev/qcqmi[0-1]*       u:object_r:ril_device:s0
+/dev/ttyACM[0-6]*      u:object_r:ril_device:s0
+/dev/ttyUSB[0-5]*      u:object_r:gps_device:s0
+/dev/ttyACM[0-7]*      u:object_r:gps_device:s0
+/dev/socket/swigps	   u:object_r:gps_socket:s0
+/system/bin/init.dhcpcd	        u:object_r:sierra_dhcpcd_exec:s0
+/system/bin/init.config.ip	    u:object_r:sierra_config_ip_exec:s0

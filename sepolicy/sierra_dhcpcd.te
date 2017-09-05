@@ -1,0 +1,27 @@
+type sierra_dhcpcd, domain;
+type sierra_dhcpcd_exec, exec_type, file_type;
+
+init_daemon_domain(sierra_dhcpcd)
+net_domain(sierra_dhcpcd)
+
+allow sierra_dhcpcd self:packet_socket create_socket_perms;
+allow sierra_dhcpcd self:capability { setuid net_admin dac_override setgid net_raw net_bind_service};
+allow sierra_dhcpcd self:netlink_route_socket nlmsg_write;
+
+allow sierra_dhcpcd dhcp_data_file:file create_file_perms;
+allow sierra_dhcpcd dhcp_data_file:dir w_dir_perms;
+allow sierra_dhcpcd proc_net:file rw_file_perms;
+allow sierra_dhcpcd system_file:file rx_file_perms;
+allow sierra_dhcpcd system_file:dir r_dir_perms;
+allow sierra_dhcpcd sysfs:dir r_dir_perms;
+allow sierra_dhcpcd kernel:system module_request;
+
+allow sierra_dhcpcd toolbox_exec:file { read getattr open execute execute_no_trans };
+allow sierra_dhcpcd init:unix_stream_socket connectto;
+allow sierra_dhcpcd property_socket:sock_file write;
+
+allow sierra_dhcpcd shell_exec:file {entrypoint rx_file_perms};
+allow sierra_dhcpcd dhcp_exec:file {entrypoint rx_file_perms};
+allow sierra_dhcpcd dhcp_prop:property_service set;
+allow sierra_dhcpcd radio_prop:property_service set;
+allow sierra_dhcpcd rootfs:lnk_file getattr;

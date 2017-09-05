@@ -1,0 +1,8 @@
+# property service keys
+telephony.              u:object_r:radio_prop:s0
+net.usb0.               u:object_r:radio_prop:s0
+net.wwan0.              u:object_r:radio_prop:s0
+net.dns1.               u:object_r:radio_prop:s0
+net.dns2.               u:object_r:radio_prop:s0
+dhcp.usb0.              u:object_r:radio_prop:s0
+dhcp.wwan0.             u:object_r:radio_prop:s0
