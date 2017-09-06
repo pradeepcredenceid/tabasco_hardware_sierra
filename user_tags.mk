@@ -6,11 +6,9 @@
 # grandfathered modules, but this is the easiest way to manage Sierra specific
 # modules.
 #
-#
 # Copyright (C) 2011 Sierra Wireless, Inc.
 #
-# This file will be included by build/core/user_tags.mk, so assume the variable
-# exists, and we are just adding to it.
+# This file will be included by your device .mk file.
 
 PRODUCT_PACKAGES += \
 	libswigpsqmi \
@@ -52,11 +50,14 @@ PRODUCT_PACKAGES += \
 	CallLogBackup \
 	CellBroadcastReceiver \
 	EmergencyInfo \
-	rild
+	dhcpcd \
+	dhcpcd-run-hooks \
+	messaging
 
 PRODUCT_PROPERTY_OVERRIDES += \
 	ro.carrier=unknown \
 	persist.sierra.sim_ready_delay=15 \
+	persist.sys.ril.type=HL \
 	ro.sierra.voice=1 \
 	ro.com.android.mobiledata=true \
 	ro.telephony.default_network=10
